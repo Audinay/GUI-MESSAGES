@@ -157,7 +157,7 @@ _i[8].Parent = _i[2]
 
 -- Scripts:
 
-local function HQYDX_fake_script() -- LHBR1.LocalScript
+local function TDYTG_fake_script() -- LHBR1.LocalScript
 	local script = Instance.new('LocalScript', _i[2])
 	script.Name = [[LocalScript]]
 
@@ -165,6 +165,7 @@ local function HQYDX_fake_script() -- LHBR1.LocalScript
 	-- INITIALISATION DES SERVICES ET OBJETS
 	-- ==========================================
 	local TweenService = game:GetService("TweenService")
+	local RunService = game:GetService("RunService")
 	
 	-- L'objet LHBR1 (l'image)
 	local LHBR1 = script.Parent
@@ -182,119 +183,147 @@ local function HQYDX_fake_script() -- LHBR1.LocalScript
 	local tempsAffichage = 5
 	local titreTexte = "Titre par défaut"
 	local messageTexte = "Message par défaut"
-	local styleContour = 1 -- Le fameux LD (1 par défaut)
+	local styleContour = 1 -- LD (1 par défaut)
 	
 	pcall(function()
-	
 		if getgenv then
-	
 			if getgenv().Temps then
 				tempsAffichage = getgenv().Temps
 			end
-	
 			if getgenv().Titre then
 				titreTexte = getgenv().Titre
 			end
-	
 			if getgenv().Message then
 				messageTexte = getgenv().Message
 			end
-	
-			-- Récupération de la variable LD pour la couleur du contour
 			if getgenv().LD then
 				styleContour = getgenv().LD
 			end
-	
 		end
-	
 	end)
 	
 	labelTitre.Text = titreTexte
 	labelMessages.Text = messageTexte
 	
 	-- ==========================================
-	-- GESTION DU CONTOUR (UISTROKE)
+	-- GESTION DU CONTOUR (UISTROKE ET UIGRADIENT)
 	-- ==========================================
-	-- On détermine la couleur en fonction du chiffre de LD
-	local couleurChoisie = Color3.fromRGB(255, 255, 255) -- 1 = Blanc par défaut
 	
-	if styleContour == 1 then
-		couleurChoisie = Color3.fromRGB(255, 255, 255) -- Blanc
-	elseif styleContour == 2 then
-		couleurChoisie = Color3.fromRGB(0, 0, 0)       -- Noir
-	elseif styleContour == 3 then
-		couleurChoisie = Color3.fromRGB(255, 0, 0)     -- Rouge
-	elseif styleContour == 4 then
-		couleurChoisie = Color3.fromRGB(0, 170, 255)   -- Bleu clair
-	end
+	local function AppliquerContour(elementTexte, ld)
 	
-	-- Fonction pour appliquer la couleur du contour de façon sécurisée
-	local function AppliquerContour(elementTexte, couleur)
-	
-		-- On cherche s'il y a déjà un UIStroke
+		-- On crée ou récupère le UIStroke
 		local contour = elementTexte:FindFirstChildOfClass("UIStroke")
-	
-		-- S'il n'y en a pas, on le crée pour éviter toute erreur
 		if not contour then
 			contour = Instance.new("UIStroke")
-			contour.Thickness = 2 -- Épaisseur du contour
+			contour.Thickness = 2.5
 			contour.Parent = elementTexte
 		end
 	
-		-- On applique la couleur choisie par LD
-		contour.Color = couleur
+		-- COULEURS UNIES (1 à 10)
+		if ld <= 10 then
+			if ld == 1 then contour.Color = Color3.fromRGB(255, 255, 255)       -- 1: Blanc
+			elseif ld == 2 then contour.Color = Color3.fromRGB(0, 0, 0)         -- 2: Noir
+			elseif ld == 3 then contour.Color = Color3.fromRGB(255, 0, 0)       -- 3: Rouge
+			elseif ld == 4 then contour.Color = Color3.fromRGB(0, 85, 255)      -- 4: Bleu
+			elseif ld == 5 then contour.Color = Color3.fromRGB(0, 255, 0)       -- 5: Vert
+			elseif ld == 6 then contour.Color = Color3.fromRGB(255, 255, 0)     -- 6: Jaune
+			elseif ld == 7 then contour.Color = Color3.fromRGB(170, 0, 255)     -- 7: Violet
+			elseif ld == 8 then contour.Color = Color3.fromRGB(255, 170, 0)     -- 8: Orange
+			elseif ld == 9 then contour.Color = Color3.fromRGB(255, 85, 255)    -- 9: Rose
+			elseif ld == 10 then contour.Color = Color3.fromRGB(0, 255, 255)    -- 10: Cyan
+			end
 	
+			-- COULEURS MÉLANGÉES (11 à 15 avec UIGradient)
+		elseif ld >= 11 and ld <= 15 then
+	
+			-- Le contour doit être blanc pour que le gradient s'affiche correctement
+			contour.Color = Color3.fromRGB(255, 255, 255) 
+	
+			-- On crée le UIGradient
+			local gradient = Instance.new("UIGradient")
+			gradient.Parent = contour
+	
+			if ld == 11 then
+				-- Dégradé 11 : Rouge vers Jaune (Feu)
+				gradient.Color = ColorSequence.new{
+					ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 0, 0)),
+					ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 0))
+				}
+	
+			elseif ld == 12 then
+				-- Dégradé 12 : Bleu foncé vers Cyan (Océan)
+				gradient.Color = ColorSequence.new{
+					ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 0, 255)),
+					ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 255, 255))
+				}
+	
+			elseif ld == 13 then
+				-- Dégradé 13 : Violet vers Rose (Néon)
+				gradient.Color = ColorSequence.new{
+					ColorSequenceKeypoint.new(0, Color3.fromRGB(128, 0, 128)),
+					ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 85, 255))
+				}
+	
+			elseif ld == 14 then
+				-- Dégradé 14 : Vert vers Jaune (Toxique)
+				gradient.Color = ColorSequence.new{
+					ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 255, 0)),
+					ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 0))
+				}
+	
+			elseif ld == 15 then
+				-- Dégradé 15 : Multi-couleurs Animé !
+				gradient.Color = ColorSequence.new{
+					ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 0, 0)),
+					ColorSequenceKeypoint.new(0.2, Color3.fromRGB(255, 255, 0)),
+					ColorSequenceKeypoint.new(0.4, Color3.fromRGB(0, 255, 0)),
+					ColorSequenceKeypoint.new(0.6, Color3.fromRGB(0, 255, 255)),
+					ColorSequenceKeypoint.new(0.8, Color3.fromRGB(0, 0, 255)),
+					ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 0, 0))
+				}
+	
+				-- L'animation : on fait tourner le dégradé en boucle
+				local animationConnexion
+				animationConnexion = RunService.RenderStepped:Connect(function(deltaTime)
+					-- Si l'interface est détruite, on arrête la boucle pour éviter les bugs
+					if not gradient.Parent then
+						animationConnexion:Disconnect()
+						return
+					end
+	
+					-- On fait tourner la couleur continuellement
+					gradient.Rotation = (gradient.Rotation + 150 * deltaTime) % 360
+				end)
+			end
+		end
 	end
 	
-	-- On applique le contour sur les deux textes
-	AppliquerContour(labelTitre, couleurChoisie)
-	AppliquerContour(labelMessages, couleurChoisie)
+	-- On applique la configuration sur les deux textes
+	AppliquerContour(labelTitre, styleContour)
+	AppliquerContour(labelMessages, styleContour)
 	
 	-- ==========================================
-	-- PRÉPARATION DE L'ANIMATION
+	-- PRÉPARATION DE L'ANIMATION D'APPARITION
 	-- ==========================================
-	-- On sauvegarde la position parfaite
 	local positionOrigine = LHBR1.Position
-	
-	-- On détermine la position cachée (totalement à droite)
 	local positionCachee = UDim2.new(1.5, 0, positionOrigine.Y.Scale, positionOrigine.Y.Offset)
-	
-	-- On place l'interface à l'extérieur de l'écran à droite
 	LHBR1.Position = positionCachee
 	
-	-- Configuration du mouvement
-	local tweenParametres = TweenInfo.new(
-		1, -- Durée
-		Enum.EasingStyle.Quart,
-		Enum.EasingDirection.Out
-	)
+	local tweenParametres = TweenInfo.new(1, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)
 	
-	-- Création des animations
-	local animationEntree = TweenService:Create(LHBR1, tweenParametres, {
-		Position = positionOrigine
-	})
-	
-	local animationSortie = TweenService:Create(LHBR1, tweenParametres, {
-		Position = positionCachee
-	})
+	local animationEntree = TweenService:Create(LHBR1, tweenParametres, {Position = positionOrigine})
+	local animationSortie = TweenService:Create(LHBR1, tweenParametres, {Position = positionCachee})
 	
 	-- ==========================================
 	-- EXÉCUTION DU SYSTÈME
 	-- ==========================================
-	
-	-- 1. On lance l'animation qui vient de la droite
 	animationEntree:Play()
 	
-	-- 2. On attend la fin de l'animation PLUS le minuteur
 	task.wait(1 + tempsAffichage)
 	
-	-- 3. On lance l'animation qui repart vers la droite
 	animationSortie:Play()
-	
-	-- 4. On attend que l'interface soit totalement sortie
 	animationSortie.Completed:Wait()
 	
-	-- 5. On supprime le GUI
 	guiMessage:Destroy()
 end
-coroutine.wrap(HQYDX_fake_script)()
+coroutine.wrap(TDYTG_fake_script)()
