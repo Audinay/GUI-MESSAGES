@@ -96,102 +96,68 @@ _i[5].DominantAxis = Enum.DominantAxis.Width
 _i[5].Name = [[UIAspectRatioConstraint]]
 _i[5].Parent = _i[4]
 
-_i[6] = Instance.new("UIStroke")
-_i[6].ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual
-_i[6].Color = Color3.fromRGB(255,255,255)
-_i[6].LineJoinMode = Enum.LineJoinMode.Round
-_i[6].Thickness = 2.299999952316284
-_i[6].Transparency = 0
-_i[6].Name = [[UIStroke]]
-_i[6].Parent = _i[4]
+_i[6] = Instance.new("TextLabel")
+_i[6].AnchorPoint = Vector2.new(0,0)
+_i[6].BackgroundColor3 = Color3.fromRGB(255,255,255)
+_i[6].BackgroundTransparency = 1
+_i[6].BorderColor3 = Color3.fromRGB(0,0,0)
+_i[6].BorderSizePixel = 0
+_i[6].ClipsDescendants = false
+_i[6].LayoutOrder = 0
+_i[6].Position = UDim2.new(0.243048,0,0.367941,0)
+_i[6].Rotation = 0
+_i[6].Selectable = false
+_i[6].Size = UDim2.new(0.738855,0,0.492516,0)
+_i[6].SizeConstraint = Enum.SizeConstraint.RelativeXY
+_i[6].Visible = true
+_i[6].ZIndex = 1
+_i[6].Font = Enum.Font.SourceSans
+_i[6].LineHeight = 1
+_i[6].MaxVisibleGraphemes = -1
+_i[6].RichText = true
+_i[6].Text = [[messages]]
+_i[6].TextColor3 = Color3.fromRGB(255,255,255)
+_i[6].TextScaled = true
+_i[6].TextSize = 14
+_i[6].TextStrokeColor3 = Color3.fromRGB(0,0,0)
+_i[6].TextStrokeTransparency = 1
+_i[6].TextTransparency = 0
+_i[6].TextTruncate = Enum.TextTruncate.None
+_i[6].TextWrapped = true
+_i[6].TextXAlignment = Enum.TextXAlignment.Center
+_i[6].TextYAlignment = Enum.TextYAlignment.Center
+_i[6].Name = [[MESSAGES]]
+_i[6].Parent = _i[2]
 
-_i[7] = Instance.new("UIGradient")
-_i[7].Color = ColorSequence.new({ColorSequenceKeypoint.new(0,Color3.fromRGB(0,255,149)),ColorSequenceKeypoint.new(0.567388,Color3.fromRGB(19,109,255)),ColorSequenceKeypoint.new(1,Color3.fromRGB(255,0,153))})
-_i[7].Offset = Vector2.new(0,0)
-_i[7].Rotation = 0
-_i[7].Transparency = NumberSequence.new({NumberSequenceKeypoint.new(0,0,0),NumberSequenceKeypoint.new(1,0,0)})
-_i[7].Name = [[UIGradient]]
+_i[7] = Instance.new("UIAspectRatioConstraint")
+_i[7].AspectRatio = 3.888864517211914
+_i[7].AspectType = Enum.AspectType.FitWithinMaxSize
+_i[7].DominantAxis = Enum.DominantAxis.Width
+_i[7].Name = [[UIAspectRatioConstraint]]
 _i[7].Parent = _i[6]
 
-_i[8] = Instance.new("TextLabel")
+_i[8] = Instance.new("Frame")
 _i[8].AnchorPoint = Vector2.new(0,0)
 _i[8].BackgroundColor3 = Color3.fromRGB(255,255,255)
-_i[8].BackgroundTransparency = 1
+_i[8].BackgroundTransparency = 0
 _i[8].BorderColor3 = Color3.fromRGB(0,0,0)
 _i[8].BorderSizePixel = 0
 _i[8].ClipsDescendants = false
 _i[8].LayoutOrder = 0
-_i[8].Position = UDim2.new(0.243048,0,0.367941,0)
+_i[8].Position = UDim2.new(0.253793,0,0.352087,0)
 _i[8].Rotation = 0
 _i[8].Selectable = false
-_i[8].Size = UDim2.new(0.738855,0,0.492516,0)
+_i[8].Size = UDim2.new(0.736916,0,0.0158531,0)
 _i[8].SizeConstraint = Enum.SizeConstraint.RelativeXY
 _i[8].Visible = true
 _i[8].ZIndex = 1
-_i[8].Font = Enum.Font.SourceSans
-_i[8].LineHeight = 1
-_i[8].MaxVisibleGraphemes = -1
-_i[8].RichText = true
-_i[8].Text = [[messages]]
-_i[8].TextColor3 = Color3.fromRGB(255,255,255)
-_i[8].TextScaled = true
-_i[8].TextSize = 14
-_i[8].TextStrokeColor3 = Color3.fromRGB(0,0,0)
-_i[8].TextStrokeTransparency = 1
-_i[8].TextTransparency = 0
-_i[8].TextTruncate = Enum.TextTruncate.None
-_i[8].TextWrapped = true
-_i[8].TextXAlignment = Enum.TextXAlignment.Center
-_i[8].TextYAlignment = Enum.TextYAlignment.Center
-_i[8].Name = [[MESSAGES]]
+_i[8].Name = [[Frame]]
 _i[8].Parent = _i[2]
-
-_i[9] = Instance.new("UIAspectRatioConstraint")
-_i[9].AspectRatio = 3.888864517211914
-_i[9].AspectType = Enum.AspectType.FitWithinMaxSize
-_i[9].DominantAxis = Enum.DominantAxis.Width
-_i[9].Name = [[UIAspectRatioConstraint]]
-_i[9].Parent = _i[8]
-
-_i[10] = Instance.new("UIStroke")
-_i[10].ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual
-_i[10].Color = Color3.fromRGB(255,255,255)
-_i[10].LineJoinMode = Enum.LineJoinMode.Round
-_i[10].Thickness = 2.299999952316284
-_i[10].Transparency = 0
-_i[10].Name = [[UIStroke]]
-_i[10].Parent = _i[8]
-
-_i[11] = Instance.new("UIGradient")
-_i[11].Color = ColorSequence.new({ColorSequenceKeypoint.new(0,Color3.fromRGB(0,255,149)),ColorSequenceKeypoint.new(0.567388,Color3.fromRGB(19,109,255)),ColorSequenceKeypoint.new(1,Color3.fromRGB(255,0,153))})
-_i[11].Offset = Vector2.new(0,0)
-_i[11].Rotation = 0
-_i[11].Transparency = NumberSequence.new({NumberSequenceKeypoint.new(0,0,0),NumberSequenceKeypoint.new(1,0,0)})
-_i[11].Name = [[UIGradient]]
-_i[11].Parent = _i[10]
-
-_i[12] = Instance.new("Frame")
-_i[12].AnchorPoint = Vector2.new(0,0)
-_i[12].BackgroundColor3 = Color3.fromRGB(255,255,255)
-_i[12].BackgroundTransparency = 0
-_i[12].BorderColor3 = Color3.fromRGB(0,0,0)
-_i[12].BorderSizePixel = 0
-_i[12].ClipsDescendants = false
-_i[12].LayoutOrder = 0
-_i[12].Position = UDim2.new(0.253793,0,0.352087,0)
-_i[12].Rotation = 0
-_i[12].Selectable = false
-_i[12].Size = UDim2.new(0.736916,0,0.0158531,0)
-_i[12].SizeConstraint = Enum.SizeConstraint.RelativeXY
-_i[12].Visible = true
-_i[12].ZIndex = 1
-_i[12].Name = [[Frame]]
-_i[12].Parent = _i[2]
 
 
 -- Scripts:
 
-local function VXAOR_fake_script() -- LHBR1.LocalScript
+local function HQYDX_fake_script() -- LHBR1.LocalScript
 	local script = Instance.new('LocalScript', _i[2])
 	script.Name = [[LocalScript]]
 
@@ -216,6 +182,7 @@ local function VXAOR_fake_script() -- LHBR1.LocalScript
 	local tempsAffichage = 5
 	local titreTexte = "Titre par défaut"
 	local messageTexte = "Message par défaut"
+	local styleContour = 1 -- Le fameux LD (1 par défaut)
 	
 	pcall(function()
 	
@@ -233,6 +200,11 @@ local function VXAOR_fake_script() -- LHBR1.LocalScript
 				messageTexte = getgenv().Message
 			end
 	
+			-- Récupération de la variable LD pour la couleur du contour
+			if getgenv().LD then
+				styleContour = getgenv().LD
+			end
+	
 		end
 	
 	end)
@@ -241,12 +213,50 @@ local function VXAOR_fake_script() -- LHBR1.LocalScript
 	labelMessages.Text = messageTexte
 	
 	-- ==========================================
-	-- PRÉPARATION DE L'ANIMATION (SANS TRANSPARENCE)
+	-- GESTION DU CONTOUR (UISTROKE)
 	-- ==========================================
-	-- On sauvegarde la position parfaite que tu as configurée
+	-- On détermine la couleur en fonction du chiffre de LD
+	local couleurChoisie = Color3.fromRGB(255, 255, 255) -- 1 = Blanc par défaut
+	
+	if styleContour == 1 then
+		couleurChoisie = Color3.fromRGB(255, 255, 255) -- Blanc
+	elseif styleContour == 2 then
+		couleurChoisie = Color3.fromRGB(0, 0, 0)       -- Noir
+	elseif styleContour == 3 then
+		couleurChoisie = Color3.fromRGB(255, 0, 0)     -- Rouge
+	elseif styleContour == 4 then
+		couleurChoisie = Color3.fromRGB(0, 170, 255)   -- Bleu clair
+	end
+	
+	-- Fonction pour appliquer la couleur du contour de façon sécurisée
+	local function AppliquerContour(elementTexte, couleur)
+	
+		-- On cherche s'il y a déjà un UIStroke
+		local contour = elementTexte:FindFirstChildOfClass("UIStroke")
+	
+		-- S'il n'y en a pas, on le crée pour éviter toute erreur
+		if not contour then
+			contour = Instance.new("UIStroke")
+			contour.Thickness = 2 -- Épaisseur du contour
+			contour.Parent = elementTexte
+		end
+	
+		-- On applique la couleur choisie par LD
+		contour.Color = couleur
+	
+	end
+	
+	-- On applique le contour sur les deux textes
+	AppliquerContour(labelTitre, couleurChoisie)
+	AppliquerContour(labelMessages, couleurChoisie)
+	
+	-- ==========================================
+	-- PRÉPARATION DE L'ANIMATION
+	-- ==========================================
+	-- On sauvegarde la position parfaite
 	local positionOrigine = LHBR1.Position
 	
-	-- On détermine la position cachée (totalement à droite de l'écran, mais sur la même hauteur)
+	-- On détermine la position cachée (totalement à droite)
 	local positionCachee = UDim2.new(1.5, 0, positionOrigine.Y.Scale, positionOrigine.Y.Offset)
 	
 	-- On place l'interface à l'extérieur de l'écran à droite
@@ -259,7 +269,7 @@ local function VXAOR_fake_script() -- LHBR1.LocalScript
 		Enum.EasingDirection.Out
 	)
 	
-	-- On ne modifie plus que la position (la transparence est enlevée)
+	-- Création des animations
 	local animationEntree = TweenService:Create(LHBR1, tweenParametres, {
 		Position = positionOrigine
 	})
@@ -275,7 +285,7 @@ local function VXAOR_fake_script() -- LHBR1.LocalScript
 	-- 1. On lance l'animation qui vient de la droite
 	animationEntree:Play()
 	
-	-- 2. On attend la fin de l'animation PLUS ton minuteur
+	-- 2. On attend la fin de l'animation PLUS le minuteur
 	task.wait(1 + tempsAffichage)
 	
 	-- 3. On lance l'animation qui repart vers la droite
@@ -284,7 +294,7 @@ local function VXAOR_fake_script() -- LHBR1.LocalScript
 	-- 4. On attend que l'interface soit totalement sortie
 	animationSortie.Completed:Wait()
 	
-	-- 5. On supprime le GUI pour nettoyer
+	-- 5. On supprime le GUI
 	guiMessage:Destroy()
 end
-coroutine.wrap(VXAOR_fake_script)()
+coroutine.wrap(HQYDX_fake_script)()
