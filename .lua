@@ -67,7 +67,7 @@ _i[4].LayoutOrder = 0
 _i[4].Position = UDim2.new(0.336929,0,0.151943,0)
 _i[4].Rotation = 0
 _i[4].Selectable = false
-_i[4].Size = UDim2.new(0.644974,0,0.215998,0)
+_i[4].Size = UDim2.new(0.638859,0,0.215998,0)
 _i[4].SizeConstraint = Enum.SizeConstraint.RelativeXY
 _i[4].Visible = true
 _i[4].ZIndex = 1
@@ -90,7 +90,7 @@ _i[4].Name = [[TITRE]]
 _i[4].Parent = _i[2]
 
 _i[5] = Instance.new("UIAspectRatioConstraint")
-_i[5].AspectRatio = 7.740642547607422
+_i[5].AspectRatio = 7.667247772216797
 _i[5].AspectType = Enum.AspectType.FitWithinMaxSize
 _i[5].DominantAxis = Enum.DominantAxis.Width
 _i[5].Name = [[UIAspectRatioConstraint]]
@@ -107,7 +107,7 @@ _i[6].LayoutOrder = 0
 _i[6].Position = UDim2.new(0.243048,0,0.367941,0)
 _i[6].Rotation = 0
 _i[6].Selectable = false
-_i[6].Size = UDim2.new(0.738855,0,0.492516,0)
+_i[6].Size = UDim2.new(0.732739,0,0.492516,0)
 _i[6].SizeConstraint = Enum.SizeConstraint.RelativeXY
 _i[6].Visible = true
 _i[6].ZIndex = 1
@@ -130,7 +130,7 @@ _i[6].Name = [[MESSAGES]]
 _i[6].Parent = _i[2]
 
 _i[7] = Instance.new("UIAspectRatioConstraint")
-_i[7].AspectRatio = 3.888864517211914
+_i[7].AspectRatio = 3.8566763401031494
 _i[7].AspectType = Enum.AspectType.FitWithinMaxSize
 _i[7].DominantAxis = Enum.DominantAxis.Width
 _i[7].Name = [[UIAspectRatioConstraint]]
@@ -191,7 +191,7 @@ _i[10].Parent = _i[9]
 
 -- Scripts:
 
-local function EDEDG_fake_script() -- LHBR1.LocalScript
+local function BNHMJ_fake_script() -- LHBR1.LocalScript
 	local script = Instance.new('LocalScript', _i[2])
 	script.Name = [[LocalScript]]
 
@@ -466,4 +466,4 @@ local function EDEDG_fake_script() -- LHBR1.LocalScript
 	
 	guiMessage:Destroy()
 end
-coroutine.wrap(EDEDG_fake_script)()
+coroutine.wrap(BNHMJ_fake_script)()
