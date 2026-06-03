@@ -17,7 +17,7 @@ local _i = {}
 _i[1] = Instance.new("ScreenGui")
 _i[1].DisplayOrder = 0
 _i[1].Enabled = true
-_i[1].IgnoreGuiInset = false
+_i[1].IgnoreGuiInset = true
 _i[1].ResetOnSpawn = true
 _i[1].Name = [[message]]
 _i[1].Parent = PlayerGui
@@ -151,13 +151,47 @@ _i[8].Size = UDim2.new(0.736916,0,0.0158531,0)
 _i[8].SizeConstraint = Enum.SizeConstraint.RelativeXY
 _i[8].Visible = true
 _i[8].ZIndex = 1
-_i[8].Name = [[Frame]]
+_i[8].Name = [[1]]
 _i[8].Parent = _i[2]
+
+_i[9] = Instance.new("ImageLabel")
+_i[9].AnchorPoint = Vector2.new(0,0)
+_i[9].BackgroundColor3 = Color3.fromRGB(255,255,255)
+_i[9].BackgroundTransparency = 0
+_i[9].BorderColor3 = Color3.fromRGB(0,0,0)
+_i[9].BorderSizePixel = 0
+_i[9].ClipsDescendants = false
+_i[9].LayoutOrder = 0
+_i[9].Position = UDim2.new(0.134541,0,0.610345,0)
+_i[9].Rotation = 0
+_i[9].Selectable = false
+_i[9].Size = UDim2.new(0.0978478,0,0.261576,0)
+_i[9].SizeConstraint = Enum.SizeConstraint.RelativeXY
+_i[9].Visible = true
+_i[9].ZIndex = 1
+_i[9].Image = [[rbxasset://textures/ui/GuiImagePlaceholder.png]]
+_i[9].ImageColor3 = Color3.fromRGB(255,255,255)
+_i[9].ImageRectOffset = Vector2.new(0,0)
+_i[9].ImageRectSize = Vector2.new(0,0)
+_i[9].ImageTransparency = 0
+_i[9].ResampleMode = Enum.ResamplerMode.Default
+_i[9].ScaleType = Enum.ScaleType.Stretch
+_i[9].SliceCenter = Rect.new(0,0,0,0)
+_i[9].SliceScale = 1
+_i[9].Name = [[IMAGES]]
+_i[9].Parent = _i[2]
+
+_i[10] = Instance.new("UIAspectRatioConstraint")
+_i[10].AspectRatio = 0.9696969985961914
+_i[10].AspectType = Enum.AspectType.FitWithinMaxSize
+_i[10].DominantAxis = Enum.DominantAxis.Width
+_i[10].Name = [[UIAspectRatioConstraint]]
+_i[10].Parent = _i[9]
 
 
 -- Scripts:
 
-local function TDYTG_fake_script() -- LHBR1.LocalScript
+local function BTYLR_fake_script() -- LHBR1.LocalScript
 	local script = Instance.new('LocalScript', _i[2])
 	script.Name = [[LocalScript]]
 
@@ -167,15 +201,17 @@ local function TDYTG_fake_script() -- LHBR1.LocalScript
 	local TweenService = game:GetService("TweenService")
 	local RunService = game:GetService("RunService")
 	
-	-- L'objet LHBR1 (l'image)
+	-- L'objet LHBR1 (l'image principale)
 	local LHBR1 = script.Parent
 	
-	-- L'interface globale (le ScreenGui nommé "message")
+	-- L'interface globale
 	local guiMessage = LHBR1.Parent
 	
-	-- Les éléments de texte
+	-- Les éléments enfants
 	local labelTitre = LHBR1:WaitForChild("TITRE")
 	local labelMessages = LHBR1:WaitForChild("MESSAGES")
+	local labelImage = LHBR1:FindFirstChild("IMAGES")
+	local frame1 = LHBR1:FindFirstChild("1")
 	
 	-- ==========================================
 	-- GESTION DES VARIABLES GLOBALES
@@ -183,22 +219,22 @@ local function TDYTG_fake_script() -- LHBR1.LocalScript
 	local tempsAffichage = 5
 	local titreTexte = "Titre par défaut"
 	local messageTexte = "Message par défaut"
-	local styleContour = 1 -- LD (1 par défaut)
+	local styleContour = 1       -- LD pour le contour du texte
+	local idImage = 0            -- L'ID de l'image (0 = pas d'image)
+	local arrondiImage = 0       -- Arrondi de l'image (0 = carré)
+	local couleurFond = 1        -- Couleur du fond (LHBR1 et Frame 1)
 	
 	pcall(function()
 		if getgenv then
-			if getgenv().Temps then
-				tempsAffichage = getgenv().Temps
-			end
-			if getgenv().Titre then
-				titreTexte = getgenv().Titre
-			end
-			if getgenv().Message then
-				messageTexte = getgenv().Message
-			end
-			if getgenv().LD then
-				styleContour = getgenv().LD
-			end
+			if getgenv().Temps then tempsAffichage = getgenv().Temps end
+			if getgenv().Titre then titreTexte = getgenv().Titre end
+			if getgenv().Message then messageTexte = getgenv().Message end
+			if getgenv().LD then styleContour = getgenv().LD end
+	
+			-- Nouvelles variables
+			if getgenv().ImageID then idImage = getgenv().ImageID end
+			if getgenv().ImageArrondi then arrondiImage = getgenv().ImageArrondi end
+			if getgenv().CouleurFond then couleurFond = getgenv().CouleurFond end
 		end
 	end)
 	
@@ -206,12 +242,73 @@ local function TDYTG_fake_script() -- LHBR1.LocalScript
 	labelMessages.Text = messageTexte
 	
 	-- ==========================================
+	-- GESTION DE L'IMAGE ("IMAGES")
+	-- ==========================================
+	if labelImage then
+		-- Si la valeur est 0, on cache l'image complètement
+		if idImage == 0 or idImage == "0" then
+			labelImage.Visible = false
+		else
+			labelImage.Visible = true
+	
+			-- On formate l'ID proprement pour Roblox
+			local formatID = tostring(idImage)
+			if not string.match(formatID, "rbxassetid://") then
+				formatID = "rbxassetid://" .. formatID
+			end
+			labelImage.Image = formatID
+	
+			-- Gestion de l'arrondi
+			local uiCorner = labelImage:FindFirstChildOfClass("UICorner")
+			if arrondiImage > 0 then
+				-- On crée l'arrondi s'il n'existe pas
+				if not uiCorner then
+					uiCorner = Instance.new("UICorner")
+					uiCorner.Parent = labelImage
+				end
+				uiCorner.CornerRadius = UDim.new(0, arrondiImage)
+			else
+				-- Si 0, on détruit l'arrondi pour faire un carré parfait
+				if uiCorner then
+					uiCorner:Destroy()
+				end
+			end
+		end
+	end
+	
+	-- ==========================================
+	-- GESTION DE LA COULEUR DE FOND (LHBR1 et Frame 1)
+	-- ==========================================
+	-- 10 Couleurs différentes (Pas de noir !)
+	local couleursDeFond = {
+		Color3.fromRGB(255, 255, 255), -- 1: Blanc (Par défaut)
+		Color3.fromRGB(255, 0, 0),     -- 2: Rouge
+		Color3.fromRGB(0, 85, 255),    -- 3: Bleu
+		Color3.fromRGB(0, 255, 0),     -- 4: Vert
+		Color3.fromRGB(255, 255, 0),   -- 5: Jaune
+		Color3.fromRGB(170, 0, 255),   -- 6: Violet
+		Color3.fromRGB(255, 170, 0),   -- 7: Orange
+		Color3.fromRGB(255, 85, 255),  -- 8: Rose
+		Color3.fromRGB(0, 255, 255),   -- 9: Cyan
+		Color3.fromRGB(170, 255, 127)  -- 10: Vert clair
+	}
+	
+	-- On récupère la couleur choisie (ou on laisse la 1 par défaut si le chiffre est faux)
+	local fondChoisi = couleursDeFond[1]
+	if couleurFond >= 1 and couleurFond <= 10 then
+		fondChoisi = couleursDeFond[couleurFond]
+	end
+	
+	-- On applique la même couleur au LHBR1 et à la frame 1
+	LHBR1.ImageColor3 = fondChoisi
+	if frame1 then
+		frame1.BackgroundColor3 = fondChoisi
+	end
+	
+	-- ==========================================
 	-- GESTION DU CONTOUR (UISTROKE ET UIGRADIENT)
 	-- ==========================================
-	
 	local function AppliquerContour(elementTexte, ld)
-	
-		-- On crée ou récupère le UIStroke
 		local contour = elementTexte:FindFirstChildOfClass("UIStroke")
 		if not contour then
 			contour = Instance.new("UIStroke")
@@ -219,60 +316,44 @@ local function TDYTG_fake_script() -- LHBR1.LocalScript
 			contour.Parent = elementTexte
 		end
 	
-		-- COULEURS UNIES (1 à 10)
 		if ld <= 10 then
-			if ld == 1 then contour.Color = Color3.fromRGB(255, 255, 255)       -- 1: Blanc
-			elseif ld == 2 then contour.Color = Color3.fromRGB(0, 0, 0)         -- 2: Noir
-			elseif ld == 3 then contour.Color = Color3.fromRGB(255, 0, 0)       -- 3: Rouge
-			elseif ld == 4 then contour.Color = Color3.fromRGB(0, 85, 255)      -- 4: Bleu
-			elseif ld == 5 then contour.Color = Color3.fromRGB(0, 255, 0)       -- 5: Vert
-			elseif ld == 6 then contour.Color = Color3.fromRGB(255, 255, 0)     -- 6: Jaune
-			elseif ld == 7 then contour.Color = Color3.fromRGB(170, 0, 255)     -- 7: Violet
-			elseif ld == 8 then contour.Color = Color3.fromRGB(255, 170, 0)     -- 8: Orange
-			elseif ld == 9 then contour.Color = Color3.fromRGB(255, 85, 255)    -- 9: Rose
-			elseif ld == 10 then contour.Color = Color3.fromRGB(0, 255, 255)    -- 10: Cyan
+			if ld == 1 then contour.Color = Color3.fromRGB(255, 255, 255)
+			elseif ld == 2 then contour.Color = Color3.fromRGB(0, 0, 0)
+			elseif ld == 3 then contour.Color = Color3.fromRGB(255, 0, 0)
+			elseif ld == 4 then contour.Color = Color3.fromRGB(0, 85, 255)
+			elseif ld == 5 then contour.Color = Color3.fromRGB(0, 255, 0)
+			elseif ld == 6 then contour.Color = Color3.fromRGB(255, 255, 0)
+			elseif ld == 7 then contour.Color = Color3.fromRGB(170, 0, 255)
+			elseif ld == 8 then contour.Color = Color3.fromRGB(255, 170, 0)
+			elseif ld == 9 then contour.Color = Color3.fromRGB(255, 85, 255)
+			elseif ld == 10 then contour.Color = Color3.fromRGB(0, 255, 255)
 			end
-	
-			-- COULEURS MÉLANGÉES (11 à 15 avec UIGradient)
 		elseif ld >= 11 and ld <= 15 then
-	
-			-- Le contour doit être blanc pour que le gradient s'affiche correctement
 			contour.Color = Color3.fromRGB(255, 255, 255) 
-	
-			-- On crée le UIGradient
 			local gradient = Instance.new("UIGradient")
 			gradient.Parent = contour
 	
 			if ld == 11 then
-				-- Dégradé 11 : Rouge vers Jaune (Feu)
 				gradient.Color = ColorSequence.new{
 					ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 0, 0)),
 					ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 0))
 				}
-	
 			elseif ld == 12 then
-				-- Dégradé 12 : Bleu foncé vers Cyan (Océan)
 				gradient.Color = ColorSequence.new{
 					ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 0, 255)),
 					ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 255, 255))
 				}
-	
 			elseif ld == 13 then
-				-- Dégradé 13 : Violet vers Rose (Néon)
 				gradient.Color = ColorSequence.new{
 					ColorSequenceKeypoint.new(0, Color3.fromRGB(128, 0, 128)),
 					ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 85, 255))
 				}
-	
 			elseif ld == 14 then
-				-- Dégradé 14 : Vert vers Jaune (Toxique)
 				gradient.Color = ColorSequence.new{
 					ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 255, 0)),
 					ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 0))
 				}
-	
 			elseif ld == 15 then
-				-- Dégradé 15 : Multi-couleurs Animé !
 				gradient.Color = ColorSequence.new{
 					ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 0, 0)),
 					ColorSequenceKeypoint.new(0.2, Color3.fromRGB(255, 255, 0)),
@@ -281,24 +362,18 @@ local function TDYTG_fake_script() -- LHBR1.LocalScript
 					ColorSequenceKeypoint.new(0.8, Color3.fromRGB(0, 0, 255)),
 					ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 0, 0))
 				}
-	
-				-- L'animation : on fait tourner le dégradé en boucle
 				local animationConnexion
 				animationConnexion = RunService.RenderStepped:Connect(function(deltaTime)
-					-- Si l'interface est détruite, on arrête la boucle pour éviter les bugs
 					if not gradient.Parent then
 						animationConnexion:Disconnect()
 						return
 					end
-	
-					-- On fait tourner la couleur continuellement
 					gradient.Rotation = (gradient.Rotation + 150 * deltaTime) % 360
 				end)
 			end
 		end
 	end
 	
-	-- On applique la configuration sur les deux textes
 	AppliquerContour(labelTitre, styleContour)
 	AppliquerContour(labelMessages, styleContour)
 	
@@ -326,4 +401,4 @@ local function TDYTG_fake_script() -- LHBR1.LocalScript
 	
 	guiMessage:Destroy()
 end
-coroutine.wrap(TDYTG_fake_script)()
+coroutine.wrap(BTYLR_fake_script)()
