@@ -71,7 +71,7 @@ _i[4].Size = UDim2.new(0.644974,0,0.215998,0)
 _i[4].SizeConstraint = Enum.SizeConstraint.RelativeXY
 _i[4].Visible = true
 _i[4].ZIndex = 1
-_i[4].Font = Enum.Font.SourceSans
+_i[4].Font = Enum.Font.Nunito
 _i[4].LineHeight = 1
 _i[4].MaxVisibleGraphemes = -1
 _i[4].RichText = false
@@ -157,7 +157,7 @@ _i[8].Parent = _i[2]
 _i[9] = Instance.new("ImageLabel")
 _i[9].AnchorPoint = Vector2.new(0,0)
 _i[9].BackgroundColor3 = Color3.fromRGB(255,255,255)
-_i[9].BackgroundTransparency = 0
+_i[9].BackgroundTransparency = 1
 _i[9].BorderColor3 = Color3.fromRGB(0,0,0)
 _i[9].BorderSizePixel = 0
 _i[9].ClipsDescendants = false
@@ -165,11 +165,11 @@ _i[9].LayoutOrder = 0
 _i[9].Position = UDim2.new(0.134541,0,0.610345,0)
 _i[9].Rotation = 0
 _i[9].Selectable = false
-_i[9].Size = UDim2.new(0.0978478,0,0.261576,0)
+_i[9].Size = UDim2.new(0.0978478,0,0.25365,0)
 _i[9].SizeConstraint = Enum.SizeConstraint.RelativeXY
 _i[9].Visible = true
 _i[9].ZIndex = 1
-_i[9].Image = [[rbxasset://textures/ui/GuiImagePlaceholder.png]]
+_i[9].Image = [[rbxassetid://93909275221626]]
 _i[9].ImageColor3 = Color3.fromRGB(255,255,255)
 _i[9].ImageRectOffset = Vector2.new(0,0)
 _i[9].ImageRectSize = Vector2.new(0,0)
@@ -182,7 +182,7 @@ _i[9].Name = [[IMAGES]]
 _i[9].Parent = _i[2]
 
 _i[10] = Instance.new("UIAspectRatioConstraint")
-_i[10].AspectRatio = 0.9696969985961914
+_i[10].AspectRatio = 1.0000001192092896
 _i[10].AspectType = Enum.AspectType.FitWithinMaxSize
 _i[10].DominantAxis = Enum.DominantAxis.Width
 _i[10].Name = [[UIAspectRatioConstraint]]
@@ -191,7 +191,7 @@ _i[10].Parent = _i[9]
 
 -- Scripts:
 
-local function BTYLR_fake_script() -- LHBR1.LocalScript
+local function EDEDG_fake_script() -- LHBR1.LocalScript
 	local script = Instance.new('LocalScript', _i[2])
 	script.Name = [[LocalScript]]
 
@@ -224,17 +224,28 @@ local function BTYLR_fake_script() -- LHBR1.LocalScript
 	local arrondiImage = 0       -- Arrondi de l'image (0 = carré)
 	local couleurFond = 1        -- Couleur du fond (LHBR1 et Frame 1)
 	
+	-- Nouvelles variables pour le texte
+	local policeTexte = 1        -- Choix de la police (1 à 10)
+	local grasTexte = false      -- Gras (B / Gonflé)
+	local italiqueTexte = false  -- Italique (I / Plié)
+	local couleurTexte = 1       -- Couleur du texte (1 à 10)
+	
 	pcall(function()
 		if getgenv then
-			if getgenv().Temps then tempsAffichage = getgenv().Temps end
-			if getgenv().Titre then titreTexte = getgenv().Titre end
-			if getgenv().Message then messageTexte = getgenv().Message end
-			if getgenv().LD then styleContour = getgenv().LD end
+			if getgenv().Temps ~= nil then tempsAffichage = getgenv().Temps end
+			if getgenv().Titre ~= nil then titreTexte = getgenv().Titre end
+			if getgenv().Message ~= nil then messageTexte = getgenv().Message end
+			if getgenv().LD ~= nil then styleContour = getgenv().LD end
 	
-			-- Nouvelles variables
-			if getgenv().ImageID then idImage = getgenv().ImageID end
-			if getgenv().ImageArrondi then arrondiImage = getgenv().ImageArrondi end
-			if getgenv().CouleurFond then couleurFond = getgenv().CouleurFond end
+			if getgenv().ImageID ~= nil then idImage = getgenv().ImageID end
+			if getgenv().ImageArrondi ~= nil then arrondiImage = getgenv().ImageArrondi end
+			if getgenv().CouleurFond ~= nil then couleurFond = getgenv().CouleurFond end
+	
+			-- Récupération des nouveaux réglages de texte
+			if getgenv().Police ~= nil then policeTexte = getgenv().Police end
+			if getgenv().Gras ~= nil then grasTexte = getgenv().Gras end
+			if getgenv().Italique ~= nil then italiqueTexte = getgenv().Italique end
+			if getgenv().CouleurTexte ~= nil then couleurTexte = getgenv().CouleurTexte end
 		end
 	end)
 	
@@ -242,36 +253,93 @@ local function BTYLR_fake_script() -- LHBR1.LocalScript
 	labelMessages.Text = messageTexte
 	
 	-- ==========================================
+	-- GESTION DU TEXTE (POLICE, GRAS, ITALIQUE, COULEUR)
+	-- ==========================================
+	
+	-- 1. Configuration des 10 polices d'écriture
+	local listePolices = {
+		Enum.Font.SourceSans,      -- 1: Classique
+		Enum.Font.Gotham,          -- 2: Moderne / Propre
+		Enum.Font.Arcade,          -- 3: Minecraft / Pixelisé
+		Enum.Font.Oswald,          -- 4: Brutal / Grand et épais
+		Enum.Font.FredokaOne,      -- 5: Arrondi / Très gonflé de base
+		Enum.Font.Cartoon,         -- 6: Cartoon
+		Enum.Font.SciFi,           -- 7: Futuriste
+		Enum.Font.PatrickHand,     -- 8: Style manuscrit
+		Enum.Font.Bangers,         -- 9: Comic / Action
+		Enum.Font.Jura             -- 10: Technologique
+	}
+	
+	local policeChoisie = listePolices[1]
+	if policeTexte >= 1 and policeTexte <= 10 then
+		policeChoisie = listePolices[policeTexte]
+	end
+	
+	-- On définit le poids (Gras) et le style (Italique)
+	local poidsPolice = Enum.FontWeight.Regular
+	if grasTexte == true then
+		poidsPolice = Enum.FontWeight.Bold
+	end
+	
+	local stylePolice = Enum.FontStyle.Normal
+	if italiqueTexte == true then
+		stylePolice = Enum.FontStyle.Italic
+	end
+	
+	-- On applique la police avec le gras et l'italique via la propriété FontFace
+	pcall(function()
+		local famillePolice = Font.fromEnum(policeChoisie).Family
+		local nouvelleFontFace = Font.new(famillePolice, poidsPolice, stylePolice)
+		labelTitre.FontFace = nouvelleFontFace
+		labelMessages.FontFace = nouvelleFontFace
+	end)
+	
+	-- 2. Configuration de la couleur du texte (TextColor3)
+	local couleursDeTexte = {
+		Color3.fromRGB(255, 255, 255), -- 1: Blanc (Par défaut)
+		Color3.fromRGB(0, 0, 0),       -- 2: Noir
+		Color3.fromRGB(255, 0, 0),     -- 3: Rouge
+		Color3.fromRGB(0, 85, 255),    -- 4: Bleu
+		Color3.fromRGB(0, 255, 0),     -- 5: Vert
+		Color3.fromRGB(255, 255, 0),   -- 6: Jaune
+		Color3.fromRGB(170, 0, 255),   -- 7: Violet
+		Color3.fromRGB(255, 170, 0),   -- 8: Orange
+		Color3.fromRGB(255, 85, 255),  -- 9: Rose
+		Color3.fromRGB(0, 255, 255)    -- 10: Cyan
+	}
+	
+	local couleurTxtChoisie = couleursDeTexte[1]
+	if couleurTexte >= 1 and couleurTexte <= 10 then
+		couleurTxtChoisie = couleursDeTexte[couleurTexte]
+	end
+	
+	labelTitre.TextColor3 = couleurTxtChoisie
+	labelMessages.TextColor3 = couleurTxtChoisie
+	
+	
+	-- ==========================================
 	-- GESTION DE L'IMAGE ("IMAGES")
 	-- ==========================================
 	if labelImage then
-		-- Si la valeur est 0, on cache l'image complètement
 		if idImage == 0 or idImage == "0" then
 			labelImage.Visible = false
 		else
 			labelImage.Visible = true
-	
-			-- On formate l'ID proprement pour Roblox
 			local formatID = tostring(idImage)
 			if not string.match(formatID, "rbxassetid://") then
 				formatID = "rbxassetid://" .. formatID
 			end
 			labelImage.Image = formatID
 	
-			-- Gestion de l'arrondi
 			local uiCorner = labelImage:FindFirstChildOfClass("UICorner")
 			if arrondiImage > 0 then
-				-- On crée l'arrondi s'il n'existe pas
 				if not uiCorner then
 					uiCorner = Instance.new("UICorner")
 					uiCorner.Parent = labelImage
 				end
 				uiCorner.CornerRadius = UDim.new(0, arrondiImage)
 			else
-				-- Si 0, on détruit l'arrondi pour faire un carré parfait
-				if uiCorner then
-					uiCorner:Destroy()
-				end
+				if uiCorner then uiCorner:Destroy() end
 			end
 		end
 	end
@@ -279,9 +347,8 @@ local function BTYLR_fake_script() -- LHBR1.LocalScript
 	-- ==========================================
 	-- GESTION DE LA COULEUR DE FOND (LHBR1 et Frame 1)
 	-- ==========================================
-	-- 10 Couleurs différentes (Pas de noir !)
 	local couleursDeFond = {
-		Color3.fromRGB(255, 255, 255), -- 1: Blanc (Par défaut)
+		Color3.fromRGB(255, 255, 255), -- 1: Blanc
 		Color3.fromRGB(255, 0, 0),     -- 2: Rouge
 		Color3.fromRGB(0, 85, 255),    -- 3: Bleu
 		Color3.fromRGB(0, 255, 0),     -- 4: Vert
@@ -293,13 +360,11 @@ local function BTYLR_fake_script() -- LHBR1.LocalScript
 		Color3.fromRGB(170, 255, 127)  -- 10: Vert clair
 	}
 	
-	-- On récupère la couleur choisie (ou on laisse la 1 par défaut si le chiffre est faux)
 	local fondChoisi = couleursDeFond[1]
 	if couleurFond >= 1 and couleurFond <= 10 then
 		fondChoisi = couleursDeFond[couleurFond]
 	end
 	
-	-- On applique la même couleur au LHBR1 et à la frame 1
 	LHBR1.ImageColor3 = fondChoisi
 	if frame1 then
 		frame1.BackgroundColor3 = fondChoisi
@@ -401,4 +466,4 @@ local function BTYLR_fake_script() -- LHBR1.LocalScript
 	
 	guiMessage:Destroy()
 end
-coroutine.wrap(BTYLR_fake_script)()
+coroutine.wrap(EDEDG_fake_script)()
